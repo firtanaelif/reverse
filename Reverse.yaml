@@ -1,0 +1,13 @@
+name: Reverse
+source code: "# A turing machine for reversing a string\r\n# Here the states are q0, q1, q2, q3, q4, q5, q6, q7, q8, done\r\n# The symbols are 'a' and 'b'\r\n# alphabet =>{a,b}, we can write any input here\r\n  input: 'aabbab' # output babbaa\r\n  blank: ' '\r\n  # q0 is the machine's start state\r\n  start state: q0\r\n  table:\r\n    q0:\r\n    # As long as we read a or b, move right\r\n    # when reading a blank, move left\r\n    # we have found the end of the input, go to state q1\r\n      a: R \r\n      b: R\r\n      # The square we are in is the last symbol of the series\r\n      ' ': {L: q1}\r\n    q1:\r\n    # Leave last symbol of input in place: \r\n    # It is also the first symbol of the reversed string. Move left, and go into state q2\r\n      a: {L: q2}\r\n      b: {L: q2}\r\n    q2:\r\n    # I find the symbol that I will add to the output;\r\n    # If the new symbol is a, go to state q3\r\n    # If the new symbol is b, go to state q4\r\n      ' ': L\r\n      a: {write: 'x', R: q3}\r\n      b: {write: 'x', R: q4}\r\n    q3:\r\n    # I will add symbol \"a\" to the output. So go to state q6\r\n      'x': R\r\n      a: {R: q6}\r\n      b: {R: q6}\r\n    q4:\r\n     # I will add symbol b to the output. So go to state q7\r\n      'x': R\r\n      a: {R: q7}\r\n      b: {R: q7}\r\n    q5:\r\n    # We use it while scanning in the input to find the next symbol to be added to the output. \r\n    # The symbol to the left of the last marked symbol will be our next symbol to be added to the output.\r\n      a: L\r\n      b: L\r\n      'x': {L: q8}\r\n    q6:\r\n    # Proceed until you find the end of the output. \r\n    # Then, add symbol \"a\" to the output\r\n      a: R\r\n      b: R\r\n      ' ': {write: a, L: q5}\r\n    q7:\r\n    # Proceed until you find the end of the output. Then, add symbol \"b\" to the output\r\n      a: R\r\n      b: R\r\n      ' ': {write: b, L: q5}\r\n    q8:\r\n    # I mark the symbols added to the output with the \"x\" symbol.\r\n    # If we have not any symbol a or b is left, that is, if all input is marked (x),\r\n    # I have to finish the program.\r\n      'x': L\r\n      a: {write: 'x', R: q3}\r\n      b: {write: 'x', R: q4}\r\n      ' ': {R: done}\r\n    done:\r\n    # All input elements were placed in the output after necessary operations.\r\n    # As a result of our last operation, we get the final version of our output.\r\n      'x': {write: ' ', R}\r\n      "
+positions:
+  q0: {x: 641.74, y: 438.49}
+  q1: {x: 516.86, y: 441.49}
+  q2: {x: 355.47, y: 440.25}
+  q3: {x: 425.74, y: 252.08}
+  q4: {x: 128.54, y: 437.74}
+  q5: {x: 147.41, y: 84.02}
+  q6: {x: 348.05, y: 85.49}
+  q7: {x: 33.5, y: 238.88}
+  q8: {x: 253.02, y: 254.97}
+  done: {x: 143.94, y: 251.9}
